@@ -12,11 +12,11 @@ and open the template in the editor.
 
     </head>
     <body>
-        <div id="test">TODO write content</div>
+        <div id="test1">TODO write content</div>
         <div id="test1">
             <!--<div class="a"><div class="b"></div><div class="c"><div class="h"></div></div></div>--> 
         </div>
-        <div id="test2">
+        <div id="test">
             <div class="a">aaa<div class="b">bbb<div class="c"><div class="d">sss</div></div><div class="f">asdf<div class="g">asdf<div class="h"><div class="i"></div></div></div><div class="x"></div><div class="y"></div></div></div><div class="j"><div class="k"></div></div></div><div class="hh">不知道<div class="jj">什么鬼</div></div>
         </div>
         <!--<div class="a">aaa<div class="b">bbb<div class="c"><div class="d">sss</div></div><div class="f">asdf<div class="g">asdf<div class="h"><div class="i"></div></div></div><div class="x"></div><div class="y"></div></div></div><div class="j"><div class="k"></div>-->
@@ -32,7 +32,7 @@ and open the template in the editor.
             function st(arry) {
                 var ed = arry.length;
                 var hoho = []
-                hoho.push(arry.length - 1)
+                hoho.push(arry.length)
                 // 存储已经取出的东西
                 function next(array, bg, ed) {
                     c++;
@@ -40,23 +40,31 @@ and open the template in the editor.
                         return;
                     }
                     var ret = find(array, bg, ed)
-                    hoho.push(ret);
+                    if (ret > bg) {
+                        hoho.push(ret);
+                    }
                     console.log("position :", ret, " value:", array[ret]);
                     if (ret > bg) {
                         next(array, bg, ret);
                     } else {
-                        bg = bg + 1;
-                        if (bg - ed >= 0) {
-                            ed = hoho.pop();
-
-                            while (ed <= bg) {
-                                ed = hoho.pop();
-                                bg = bg + 1;
-//                                console.log("弹栈", bg, ed, hoho)
-                            }
-//                            ed = hoho[hoho.length - 1];
+                        console.log("============到顶=======bg:", bg, "ed:", ed, hoho)
+                        if (ed - bg <= 1) {
+                            bg = hoho[hoho.length - 1] + 1
+                            hoho.pop();// 移除一位末尾
+                            ed = hoho[hoho.length - 1]
+                        } else {
+                            bg = bg + 1;
                         }
-////                        console.log("交换:", bg, ed, hoho)
+
+                        console.log("============位置瞬移=======bg:", bg, "ed:", ed, hoho)
+//                        if (bg - ed >= 0) {
+//                            ed = hoho[hoho.length - 1];
+                        while (ed <= bg) {
+                            bg = ed + 1;
+                            hoho.pop();
+                            ed = hoho[hoho.length - 1]
+                            console.log("弹栈", bg, ed, hoho)
+                        }
                         next(array, bg, ed);
                     }
                 }
@@ -75,6 +83,7 @@ and open the template in the editor.
                     return ret;
                 }
             }
+            var tagarray=[];
             var heep = function (hep) {
                 this.hep = hep;
             }
@@ -100,7 +109,6 @@ and open the template in the editor.
                             h.pnode = this;
                             h.po = this.po + 1;
                             this.append(cstr)
-//                            console.log("开-开", "截取字符串：" + cstr, "位置:" + p1, this.c)
                             h.findEnd(retstr);
                         } else {// 闭标签结束
                             var cstr = str.substring(p1, p2 + 6);
@@ -121,6 +129,7 @@ and open the template in the editor.
                             this.append(cstr);
                             if (this.pnode != null) {
                                 console.log("闭-闭-p===", this.pnode.c, this.pnode.po)
+                                var obj={}
                                 this.pnode.findEnd(retstr);
                             }
                         } else {// 闭开
