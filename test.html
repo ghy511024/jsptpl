@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>jsptpl.js</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+        <div id="test">
+            <div class="a">
+                aaa
+                <div class="b">
+                    bbb
+                    <div class="c">
+                        <div class="d">
+                            sss
+                        </div>
+                    </div>
+                    <div class="f">
+                        asdf
+                        <div class="g">
+                            asdf
+                            <div class="h">
+                                <div class="i">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="x">
+                        </div>
+                        <div class="y">
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="j">
+                    <div class="k">
+                    </div>
+                </div>
+            </div>
+            <div class="hh">
+                不知道
+                <div class="jj">
+                    什么鬼
+                </div>
+            </div>
+        </div>
+
+        <pre>
+           
+        </pre>
+        <script type="t/template" id="test">
+<h1>简单变量：title1 ${title}</h1>
+<div>简单数组遍历</div>
+<ul>
+<c:forEach items="${objlist}" var="item">
+<li>
+name:${item.name} 。type：${item.type}
+</li></c:forEach></ul>
+<div>简单数组遍历</div>
+<ul>
+<c:forEach items="${strlist}" var="item">
+<li>name:${item}</li>
+</c:forEach>
+</ul>
+<div>复杂数组遍历</div>
+<ul>
+<c:forEach items="${hardlist}" var="item">
+<li>
+<c:forEach items="${item}" var="tmp">
+<li>name:${tmp.name}</li>
+</c:forEach>
+</li>
+</c:forEach>
+</ul>
+        </script>
+        <script type="t/template" id="test1">
+<div class="t0"></div><div class="test1"><div class="test2"><div class="test4"></div></div><div class="test3"></div></div>
+        </script>
+        <script type="text/javascript" src="jsptpl.js"></script>
+        <script type="text/javascript">
+var data = {
+    title: "hellow word",
+    objlist: [
+        {
+            name: "咩咩咩",
+            type: "人在塔在"
+        },
+        {
+            name: "嗷嗷嗷",
+            type: "我去前面探探路"
+        }
+    ],
+    strlist: ["字符串1", "字符串2"],
+    hardlist: [
+        {
+            objlist: [{
+                    name: "nav1",
+                    type: "咩咩咩"
+                }
+            ],
+            obj: {
+                "name": "hard"
+            }
+        }
+    ],
+    objs: {
+        name: "type1",
+        objlist: [
+            {
+                "name": "我去前面探探路"
+            }
+        ],
+        list2: ["简单字符串"]
+
+    }
+}
+//=================华丽的测试分割线==============
+var str = document.getElementById('test').innerHTML;
+var strtmpl = new jsptpl(str);
+//console.log(str);
+var retstr = strtmpl.render(data);
+//console.log(retstr);
+
+var str = document.getElementById('test1').innerHTML;
+//<(?<HtmlTag>div)[^>]*?>((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>
+//var reg2=/((\?<Nested><\k<HtmlTag>[^>]*>)|<\/\k<HtmlTag>>(\?<-Nested>)|.*?)*<\/\k<HtmlTag>>/g;
+//var reg3=new RegExp("((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>")
+var reg4 = /(div)[^>].*>(.*\1[^>].*>).*<\/\1>/g;
+str.replace(reg4, function ($1, $2, $3, $4) {
+    console.log("$1", $1);
+    console.log("$2", $2);
+    console.log("$3", $3);
+    console.log("$4", $4);
+    console.log("============");
+})
+        </script>
+    </body>
+</html>
