@@ -48,15 +48,14 @@ and open the template in the editor.
                         bg = bg + 1;
                         if (bg - ed >= 0) {
                             ed = hoho.pop();
-
+                            console.log("交换:", bg, ed, hoho)
                             while (ed <= bg) {
                                 ed = hoho.pop();
                                 bg = bg + 1;
-//                                console.log("弹栈", bg, ed, hoho)
+                                console.log("弹栈", bg, ed, hoho)
                             }
 //                            ed = hoho[hoho.length - 1];
                         }
-////                        console.log("交换:", bg, ed, hoho)
                         next(array, bg, ed);
                     }
                 }
