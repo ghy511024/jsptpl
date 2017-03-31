@@ -42,22 +42,27 @@
     }
     function render(fragment, vars) {
 
-        return fragment.replace(taglib_each_reg, function (allstr, key, item, inner, $4) {
-//            console.log("allstr", allstr)
-//            console.log("key", key)
-//            console.log("item", item)
-            console.log("inner", inner)
-            var val = get_value(vars, key)
-            var i, temp = "";
-//            console.log("val", val);
-            for (i in val) {
-                if (val.hasOwnProperty(i)) {
-                    vars[item] = val[i];// 设置临时变量供render 遍历循环
-                    temp += render(inner, vars);
-                }
-            }
-            vars[item] = null;// 清除临时变量
-            return temp;
+//        return fragment.replace(taglib_each_reg, function (allstr, key, item, inner, $4) {
+////            console.log("allstr", allstr)
+////            console.log("key", key)
+////            console.log("item", item)
+//            console.log("inner", inner)
+//            var val = get_value(vars, key)
+//            var i, temp = "";
+////            console.log("val", val);
+//            for (i in val) {
+//                if (val.hasOwnProperty(i)) {
+//                    vars[item] = val[i];// 设置临时变量供render 遍历循环
+//                    temp += render(inner, vars);
+//                }
+//            }
+//            vars[item] = null;// 清除临时变量
+//            return temp;
+//        }).
+
+
+        return  fragment.tagsearch(function () {
+
         }).replace(taglib_if_reg, function (allstr, key, staticValue, inner) {
             console.log("=============iftest==========")
             console.log("allstr", allstr)
