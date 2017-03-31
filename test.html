@@ -14,7 +14,7 @@ and open the template in the editor.
         <pre>
            
         </pre>
-        <script type="t/template" id="test">
+        <script type="t/template" id="test1">
 <h1>简单变量：title1 ${title}</h1>
 <div>简单数组遍历</div>
 <ul>
@@ -36,6 +36,17 @@ and open the template in the editor.
 <li>
 <c:forEach items="${item}" var="tmp">
 <li>name:${tmp.name}</li>
+</c:forEach>
+</li>
+</c:forEach>
+</ul>
+        </script>
+        <script type="t/template" id="test">
+<ul>
+<c:forEach items="${hardlist}" var="item">
+<li>name:${tmp.name}
+<c:forEach items="${item.objlist}" var="tmp">
+<span>vvv</span>
 </c:forEach>
 </li>
 </c:forEach>
@@ -69,6 +80,16 @@ var data = {
             obj: {
                 "name": "hard"
             }
+        },
+        {
+            objlist: [{
+                    name: "nav1",
+                    type: "咩咩咩"
+                }
+            ],
+            obj: {
+                "name": "hard"
+            }
         }
     ],
     objs: {
@@ -87,7 +108,9 @@ var str = document.getElementById('test').innerHTML;
 var strtmpl = new jsptpl(str);
 //console.log(str);
 var retstr = strtmpl.render(data);
-//console.log(retstr);
+console.log(retstr);
+
+
 //<(?<HtmlTag>div)[^>]*?>((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>
 //var reg2=/((\?<Nested><\k<HtmlTag>[^>]*>)|<\/\k<HtmlTag>>(\?<-Nested>)|.*?)*<\/\k<HtmlTag>>/g;
 //var reg3=new RegExp("((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>")
@@ -102,14 +125,14 @@ s.replace(reg3,function(a,b,c){
 })
 var str="caacbamccgcmdcae"
 var reg=/(ca).{2}/g
-console.log(str.match(reg))
-    str.replace(reg4, function ($1, $2, $3, $4) {
+//console.log(str.match(reg))
+//    str.replace(reg4, function ($1, $2, $3, $4) {
 //    console.log("$1", $1);
 //    console.log("$2", $2);
 //    console.log("$3", $3);
 //    console.log("$4", $4);
 //    console.log("============");
-})
+//})
         </script>
     </body>
 </html>
