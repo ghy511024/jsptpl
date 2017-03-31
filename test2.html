@@ -12,148 +12,33 @@ and open the template in the editor.
 
     </head>
     <body>
-        <div id="test">TODO write content</div>
+        <div id="test1">TODO write content</div>
         <div id="test1">
             <!--<div class="a"><div class="b"></div><div class="c"><div class="h"></div></div></div>--> 
         </div>
-        <div id="test2">
-            <div class="a">aaa<div class="b">bbb<div class="c"><div class="d">sss</div></div><div class="f">asdf<div class="g">asdf<div class="h"><div class="i"></div></div></div><div class="x"></div><div class="y"></div></div></div><div class="j"><div class="k"></div></div></div><div class="hh">不知道<div class="jj">什么鬼</div></div>
+        <div id="test">
+            <div class="a">aaa<div class="b">bbb<div class="c"><div class="d">sss</div>xixi</div><div class="f">asdf<div class="g">asdf<div class="h"><div class="i"></div></div></div><div class="x"></div><div class="y"></div></div></div><div class="j"><div class="k"></div></div></div><div class="hh">不知道<div class="jj">什么鬼</div></div>
         </div>
         <!--<div class="a">aaa<div class="b">bbb<div class="c"><div class="d">sss</div></div><div class="f">asdf<div class="g">asdf<div class="h"><div class="i"></div></div></div><div class="x"></div><div class="y"></div></div></div><div class="j"><div class="k"></div>-->
+        <script type="text/javascript" src="lib/tagsearch.js"></script>
+      
         <script type="text/javascript">
-            var c = 0;
-            var reg = /(div[^<]?.*?>)|(<\/div>)/gim
-            var str = document.getElementById("test").innerHTML;
-            window.count = 0
-            var heep = [];
-            var array = [3, 2, 5, 4, 3, 3, 3, 2, 1, 2, 1, 0, 1, 0];
-            var boo = []
-            st(array);
-            function st(arry) {
-                var ed = arry.length;
-                var hoho = []
-                hoho.push(arry.length - 1)
-                // 存储已经取出的东西
-                function next(array, bg, ed) {
-                    c++;
-                    if (c > 20) {
-                        return;
-                    }
-                    var ret = find(array, bg, ed)
-                    hoho.push(ret);
-                    console.log("position :", ret, " value:", array[ret]);
-                    if (ret > bg) {
-                        next(array, bg, ret);
-                    } else {
-                        bg = bg + 1;
-                        if (bg - ed >= 0) {
-                            ed = hoho.pop();
-                            console.log("交换:", bg, ed, hoho)
-                            while (ed <= bg) {
-                                ed = hoho.pop();
-                                bg = bg + 1;
-                                console.log("弹栈", bg, ed, hoho)
-                            }
-//                            ed = hoho[hoho.length - 1];
-                        }
-                        next(array, bg, ed);
-                    }
-                }
-                next(arry, 0, arry.length)
-                // 查找最小
-                // 最大查找位置
-                function find(array, bg, ed) {
-                    var c = array[bg];
-                    var ret = bg;
-                    for (var i = bg; i < ed; i++) {
-                        if (array[i] < c) {
-                            c = array[i]
-                            ret = i;
-                        }
-                    }
-                    return ret;
-                }
-            }
-            var heep = function (hep) {
-                this.hep = hep;
-            }
-            heep.prototype = {
-                c: "", // 内容
-                po: 0, // 深度
-                pnode: null,
-                findEnd: function (str) {
-                    count++;
-                    if (count > 50) {
-                        return "sixunhuan";
-                    }
-                    var p1 = str.indexOf("<div");
-                    var p2 = str.indexOf("</div");
-                    var p3 = str.indexOf("<div", str.indexOf("<div") + 1);
-                    var p4 = str.indexOf("</div", str.indexOf("</div") + 1);
-//                    console.log("开始find", p1, p2, p3, p4, str.length);
-                    var h = new heep();
-                    if (p1 >= 0 && p1 < p2) {// 开标签开始
-                        if (p3 > 0 && p3 < p2) { //开标签结束 入栈
-                            var cstr = str.substring(p1, p3);
-                            var retstr = str.substring(p3);
-                            h.pnode = this;
-                            h.po = this.po + 1;
-                            this.append(cstr)
-//                            console.log("开-开", "截取字符串：" + cstr, "位置:" + p1, this.c)
-                            h.findEnd(retstr);
-                        } else {// 闭标签结束
-                            var cstr = str.substring(p1, p2 + 6);
-                            var retstr = str.substring(p2 + 6);
-                            this.append(cstr)
-                            if (this.pnode != null) {
-                                console.log("开-闭===", this.c, this.po)
-                                h.pnode = this.pnode;
-                                h.po = this.po;
-                                h.findEnd(retstr);
-                            }
-                        }
-                    } else if ((p2 >= 0 && p1 < 0) || p2 < p1) {// 开始就是闭标签
-                        var cstr = str.substring(0, p2 + 6);
-                        var retstr = str.substring(p2 + 6);
-                        if (p4 > 0 && p4 < p1) {// 闭闭
-//                            console.log("闭闭")
-                            this.append(cstr);
-                            if (this.pnode != null) {
-                                console.log("闭-闭-p===", this.pnode.c, this.pnode.po)
-                                this.pnode.findEnd(retstr);
-                            }
-                        } else {// 闭开
-                            this.append(cstr);
-                            if (this.pnode != null) {
-                                console.log("闭-开-p===", this.pnode.c, this.pnode.po)
-                                h.pnode = this.pnode.pnode;
-                                h.po = this.pnode.po;
-                                this.pnode = h;
-                                h.findEnd(retstr);
-                            }
-                        }
-                    }
-                    return "";
-                }
-                ,
-                append: function (str) {
-                    this.c = this.c + str;
-                    //                    this.pnode.c = str;
-                    if (this.pnode != null) {
-                        this.pnode.append(str);
-                        //                        console.log("###:", this.c, "###", this.pnode.c);
-                    } else {
-
-                    }
-
-                },
-                append2: function (str) {
-                    this.c = +str;
-                    this.pnode.c = this.pnode.c + str;
-                }
-            }
-            var hp = new heep();
-            var ret = hp.findEnd(str);
+              var str = document.getElementById("test").innerHTML;
+              var rg=/(<div.*?<\/div>)/gim
+              str.replace(rg,function(a,b,c,d){
+                  console.log(b)
+                  return "ghy";
+              }).replace(/ghy/gm,function(a,b,c){
+                  console.log("替换===",a,b,c)
+              })
+              console.log(str)
         </script>
+        <script type="text/javascript">
+            var str = document.getElementById("test").innerHTML;
+            str.tagsearch("div", function (c) {
+//                console.log(c)
+            })
+        </script>
+
     </body>
 </html>

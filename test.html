@@ -11,47 +11,6 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-
-        <div id="test">
-            <div class="a">
-                aaa
-                <div class="b">
-                    bbb
-                    <div class="c">
-                        <div class="d">
-                            sss
-                        </div>
-                    </div>
-                    <div class="f">
-                        asdf
-                        <div class="g">
-                            asdf
-                            <div class="h">
-                                <div class="i">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="x">
-                        </div>
-                        <div class="y">
-                        </div>
-                    </div>
-                </div>
-                
-                
-                <div class="j">
-                    <div class="k">
-                    </div>
-                </div>
-            </div>
-            <div class="hh">
-                不知道
-                <div class="jj">
-                    什么鬼
-                </div>
-            </div>
-        </div>
-
         <pre>
            
         </pre>
@@ -60,9 +19,11 @@ and open the template in the editor.
 <div>简单数组遍历</div>
 <ul>
 <c:forEach items="${objlist}" var="item">
-<li>
-name:${item.name} 。type：${item.type}
-</li></c:forEach></ul>
+ <li>
+ name:${item.name} 。type：${item.type}
+ </li>
+ </c:forEach>
+</ul>
 <div>简单数组遍历</div>
 <ul>
 <c:forEach items="${strlist}" var="item">
@@ -127,18 +88,27 @@ var strtmpl = new jsptpl(str);
 //console.log(str);
 var retstr = strtmpl.render(data);
 //console.log(retstr);
-
-var str = document.getElementById('test1').innerHTML;
 //<(?<HtmlTag>div)[^>]*?>((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>
 //var reg2=/((\?<Nested><\k<HtmlTag>[^>]*>)|<\/\k<HtmlTag>>(\?<-Nested>)|.*?)*<\/\k<HtmlTag>>/g;
 //var reg3=new RegExp("((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>")
-var reg4 = /(div)[^>].*>(.*\1[^>].*>).*<\/\1>/g;
-str.replace(reg4, function ($1, $2, $3, $4) {
-    console.log("$1", $1);
-    console.log("$2", $2);
-    console.log("$3", $3);
-    console.log("$4", $4);
-    console.log("============");
+//var reg4 = /(div)[^>].*>(.*\1[^>].*>).*<\/\1>/g;
+ var reg4 = /<[c|t]:forEach[\s]*items=["|']\$\{(.+?)\}.*[\s]+?var=["|'](.+?)["|'].*>([\s\S]+)<\/[c|t]:forEach>/gm;
+var s= "aabbccabcacasdfasdfaabnmm";
+var reg3=/(aa|ca)(?!bb).{3}/g
+s.replace(reg3,function(a,b,c){
+//    console.log("$1",a)
+//    console.log("$2",b)
+//    console.log("$3",c)
+})
+var str="caacbamccgcmdcae"
+var reg=/(ca).{2}/g
+console.log(str.match(reg))
+    str.replace(reg4, function ($1, $2, $3, $4) {
+//    console.log("$1", $1);
+//    console.log("$2", $2);
+//    console.log("$3", $3);
+//    console.log("$4", $4);
+//    console.log("============");
 })
         </script>
     </body>

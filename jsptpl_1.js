@@ -17,8 +17,7 @@
 
 (function () {
     var taglib_jsp_reg = /\$\{(.+?)\}/g;
-//    var taglib_each_reg = /<[c|t]:forEach[\s]*items=["|']\$\{(.+?)\}.*[\s]+?var=["|'](.+?)["|'].*>([\s\S]+?)<\/[c|t]:forEach>/gm;
-    var taglib_each_reg = /<[c|t]:forEach[\s]*items=["|']\$\{(.+?)\}.*[\s]+?var=["|'](.+?)["|'].*>(.*?)<\/[c|t]:forEach>/gm;
+    var taglib_each_reg = /<[c|t]:forEach[\s]*items=["|']\$\{(.+?)\}.*[\s]+?var=["|'](.+?)["|'].*>([\s\S]+?)<\/[c|t]:forEach>/g;
     var taglib_if_reg = /<[c|t]:if[\s]*test=["|']\$\{(.+?)=(.+)\}["|']+?>([\s\S]+?)<\/[c|t]:if>/g;
     // ps * 与 +? v 的区别 * 无法逐条匹配，第一个表填头和若干条后的最后一个标签尾部匹配,+? 则能逐条匹配（已经吐血）
     // ps .+ 与 .+? 的区别 .+可以匹配至下一条规则为止 .+?只匹配一个字符
