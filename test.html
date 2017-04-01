@@ -14,39 +14,15 @@ and open the template in the editor.
         <pre>
            
         </pre>
-        <script type="t/template" id="test1">
-<h1>简单变量：title1 ${title}</h1>
-<div>简单数组遍历</div>
-<ul>
-<c:forEach items="${objlist}" var="item">
- <li>
- name:${item.name} 。type：${item.type}
- </li>
- </c:forEach>
-</ul>
-<div>简单数组遍历</div>
-<ul>
-<c:forEach items="${strlist}" var="item">
-<li>name:${item}</li>
-</c:forEach>
-</ul>
-<div>复杂数组遍历</div>
-<ul>
-<c:forEach items="${hardlist}" var="item">
-<li>
-<c:forEach items="${item}" var="tmp">
-<li>name:${tmp.name}</li>
-</c:forEach>
-</li>
-</c:forEach>
-</ul>
-        </script>
         <script type="t/template" id="test">
 <ul>
 <c:forEach items="${hardlist}" var="item">
-<li>name:${tmp.name}
+<li>name:${item.name}
 <c:forEach items="${item.objlist}" var="tmp">
 <span>${tmp.type}</span>
+<c:forEach items="${tmp.objlist}" var="it">
+<i>${it.name}</i>
+</c:forEach>
 </c:forEach>
 </li>
 </c:forEach>
@@ -73,34 +49,38 @@ var data = {
     strlist: ["字符串1", "字符串2"],
     hardlist: [
         {
+            name: "第一层循环 呵呵",
             objlist: [
                 {
                     name: "nav1",
-                    type: "咩咩咩"
+                    type: "第二层循环 咩咩咩",
+                    objlist: [
+                        {
+                            name: "第三层循环 娃哈哈"
+                        },
+                        {
+                            name: "第三层循环 哈士奇"
+                        }
+                    ]
                 },
                 {
                     name: "nav2",
-                    type: "昂昂昂"
+                    type: "第二层循环 昂昂昂"
                 }
-            ],
-            obj: {
-                "name": "hard"
-            }
+            ]
         },
         {
+            name: "第一层循环 哈哈",
             objlist: [
                 {
                     name: "nav1",
-                    type: "嗷嗷嗷"
+                    type: "第二层循环 嗷嗷嗷"
                 },
                 {
                     name: "nav2",
-                    type: "万往往"
+                    type: "第二层循环 万往往"
                 }
-            ],
-            obj: {
-                "name": "hard"
-            }
+            ]
         }
     ],
     objs: {
@@ -120,8 +100,6 @@ var strtmpl = new jsptpl(str);
 //console.log(str);
 var retstr = strtmpl.render(data);
 console.log(retstr);
-
-
 //<(?<HtmlTag>div)[^>]*?>((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>
 //var reg2=/((\?<Nested><\k<HtmlTag>[^>]*>)|<\/\k<HtmlTag>>(\?<-Nested>)|.*?)*<\/\k<HtmlTag>>/g;
 //var reg3=new RegExp("((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>")

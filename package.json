@@ -1,0 +1,13 @@
+{
+    "name": "jsptpl",
+    "version": "1.0.0",
+    "description": "基于jstl 语法的模版引擎",
+    "keywords": [
+        "taglib",
+        "jsp",
+        "jsptpl"
+    ],
+    "license": "MIT",
+    "dependencies": {
+    }
+} 
