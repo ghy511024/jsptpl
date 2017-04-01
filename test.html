@@ -46,16 +46,17 @@ and open the template in the editor.
 <c:forEach items="${hardlist}" var="item">
 <li>name:${tmp.name}
 <c:forEach items="${item.objlist}" var="tmp">
-<span>vvv</span>
+<span>${tmp.type}</span>
 </c:forEach>
 </li>
 </c:forEach>
 </ul>
         </script>
         <script type="t/template" id="test1">
-<div class="t0"></div><div class="test1"><div class="test2"><div class="test4"></div></div><div class="test3"></div></div>
+            <div class="t0"></div><div class="test1"><div class="test2"><div class="test4"></div></div><div class="test3"></div></div>
         </script>
         <script type="text/javascript" src="jsptpl.js"></script>
+        <script type="text/javascript" src="lib/tagsearch.js"></script>
         <script type="text/javascript">
 var data = {
     title: "hellow word",
@@ -72,9 +73,14 @@ var data = {
     strlist: ["字符串1", "字符串2"],
     hardlist: [
         {
-            objlist: [{
+            objlist: [
+                {
                     name: "nav1",
                     type: "咩咩咩"
+                },
+                {
+                    name: "nav2",
+                    type: "昂昂昂"
                 }
             ],
             obj: {
@@ -82,9 +88,14 @@ var data = {
             }
         },
         {
-            objlist: [{
+            objlist: [
+                {
                     name: "nav1",
-                    type: "咩咩咩"
+                    type: "嗷嗷嗷"
+                },
+                {
+                    name: "nav2",
+                    type: "万往往"
                 }
             ],
             obj: {
@@ -115,16 +126,16 @@ console.log(retstr);
 //var reg2=/((\?<Nested><\k<HtmlTag>[^>]*>)|<\/\k<HtmlTag>>(\?<-Nested>)|.*?)*<\/\k<HtmlTag>>/g;
 //var reg3=new RegExp("((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>")
 //var reg4 = /(div)[^>].*>(.*\1[^>].*>).*<\/\1>/g;
- var reg4 = /<[c|t]:forEach[\s]*items=["|']\$\{(.+?)\}.*[\s]+?var=["|'](.+?)["|'].*>([\s\S]+)<\/[c|t]:forEach>/gm;
-var s= "aabbccabcacasdfasdfaabnmm";
-var reg3=/(aa|ca)(?!bb).{3}/g
-s.replace(reg3,function(a,b,c){
+var reg4 = /<[c|t]:forEach[\s]*items=["|']\$\{(.+?)\}.*[\s]+?var=["|'](.+?)["|'].*>([\s\S]+)<\/[c|t]:forEach>/gm;
+var s = "aabbccabcacasdfasdfaabnmm";
+var reg3 = /(aa|ca)(?!bb).{3}/g
+s.replace(reg3, function (a, b, c) {
 //    console.log("$1",a)
 //    console.log("$2",b)
 //    console.log("$3",c)
 })
-var str="caacbamccgcmdcae"
-var reg=/(ca).{2}/g
+var str = "caacbamccgcmdcae"
+var reg = /(ca).{2}/g
 //console.log(str.match(reg))
 //    str.replace(reg4, function ($1, $2, $3, $4) {
 //    console.log("$1", $1);

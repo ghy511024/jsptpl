@@ -41,29 +41,31 @@
         return vars;
     }
     function render(fragment, vars) {
-
-//        return fragment.replace(taglib_each_reg, function (allstr, key, item, inner, $4) {
-////            console.log("allstr", allstr)
-////            console.log("key", key)
-////            console.log("item", item)
-//            console.log("inner", inner)
-//            var val = get_value(vars, key)
-//            var i, temp = "";
-////            console.log("val", val);
-//            for (i in val) {
-//                if (val.hasOwnProperty(i)) {
-//                    vars[item] = val[i];// 设置临时变量供render 遍历循环
-//                    temp += render(inner, vars);
-//                }
-//            }
-//            vars[item] = null;// 清除临时变量
-//            return temp;
-//        }).
-
-
-        return  fragment.tagsearch(function () {
-
-        }).replace(taglib_if_reg, function (allstr, key, staticValue, inner) {
+//        console.log("开始新的匹配 源字符串", fragment)
+        var tagret = fragment.tagsearchTop("c:forEach", function (content, sstart, eend, p) {
+//            console.log("循环之前 已经匹配上：", content)
+            var tag_return = content.replace(taglib_each_reg, function (allstr, key, item, inner, $4) {
+//                console.log("inner", inner)
+//                console.log("item", item)
+                var val = get_value(vars, key)
+                var i, temp = "";
+                for (i in val) {
+                    if (val.hasOwnProperty(i)) {
+                        var obj = {};
+                        obj[item] = val[i];
+//                        console.log("开始render..")
+                        temp += render(inner, obj);
+                    }
+                }
+//                vars[item] = null;// 清除临时变量
+//                console.log("返回的变量:", temp)
+                return temp;
+            })
+//            console.log("tag 替换内部函数返回: ", tag_return);
+            return  tag_return;
+        });
+//        console.log("tag search 结果", tagret);
+        return     tagret.replace(taglib_if_reg, function (allstr, key, staticValue, inner) {
             console.log("=============iftest==========")
             console.log("allstr", allstr)
             console.log("key", key)
@@ -76,6 +78,7 @@
             return "";
 //            var val = get_value(vars, key)
         }).replace(taglib_jsp_reg, function (allstr, key) {
+//            console.log(" 进去到最后的数据转换。。。", allstr)
             var val = get_value(vars, key);
             if (val || val === 0) {
 //                return meta == '%' ? scrub(val) : val;
@@ -84,6 +87,7 @@
             return "";
         });
     }
+    ;
     jsptpl.prototype.render = function (vars) {
         return render(this.jsptpl, vars);
     };

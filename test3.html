@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+    <body>
+        <div id="test1">TODO write content</div>
+        <div id="test1">
+            <!--<div class="a"><div class="b"></div><div class="c"><div class="h"></div></div></div>--> 
+        </div>
+        <script type="text/html" id="test">
+            上面有东西
+            <div class="a">
+                <div class="b"></div>
+                这中间的没有了
+                <div class="j"></div>
+            </div>
+            中间有东西
+            <div class="c">
+                <div class="x"></div>
+                不要这样子
+                <div class="yy"></div>
+            </div>
+            下面有东西
+        </script>
+        <!--<div class="a">aaa<div class="b">bbb<div class="c"><div class="d">sss</div></div><div class="f">asdf<div class="g">asdf<div class="h"><div class="i"></div></div></div><div class="x"></div><div class="y"></div></div></div><div class="j"><div class="k"></div>-->
+        <script type="text/javascript" src="lib/tagsearch.js"></script>
+
+        <script type="text/javascript">
+//              var str = document.getElementById("test").innerHTML;
+//              var rg=/(<div.*?<\/div>)/gim
+//              str.replace(rg,function(a,b,c,d){
+//                  console.log(b)
+//                  return "ghy";
+//              }).replace(/ghy/gm,function(a,b,c){
+//                  console.log("替换===",a,b,c)
+//              })
+//              console.log(str)
+        </script>
+        <script type="text/javascript">
+            var str = document.getElementById("test").innerHTML;
+            var ret2 = str.tagsearchTop("div", function (c, s, e, p) {
+                console.log("===回调替换====：", c, s, c.length, e, p)
+                return "什么鬼"
+            })
+            var x1 = str.substr(0, 29);
+            var x2 = str.substring(29, 529);
+            //            var x3 = str.substring(736 + 29, 888);
+            //            var x4 = str.substring(888, 114);
+//            console.log("=----------...................");
+//            console.log(x2);
+//            console.log("=----------...................");
+            console.log("最后的字符串：" + ret2)
+//            var str = document.getElementById("ab").innerHTML;
+//            var s1 = str.substring(20, 60);
+//            console.log("???",s1,str.length,s1.length);
+        </script>
+
+    </body>
+</html>
