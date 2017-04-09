@@ -35,6 +35,49 @@
         }
         return vars;
     }
+    ;
+    // 目前这一版本 此方法传入最基础的表达式 a=="xxx",之类的，暂时只支持 == 和 true false 的运算，返回也是 true 或者false
+    function getExpress_value(vars, express) {
+        var spreg = /(.*?)(==|>=|<=|>|<)(.*)/g;
+        var reg = /^[\d]+$|(?=(['"]).*?\1|true|false)/g;
+        var array = [];
+        var cond;
+        express.replace(spreg, function (_, key1, exp, key2) {
+            array.push(key1);// 表达式左边字符串
+            array.push(key2);// 表达式右边字符串
+            cond = exp;// 条件表达式
+        })
+        var ret = false;
+
+        if (array.length > 1) {
+            if (!reg.test(array[0])) {
+                array[0] = get_value(vars, array[0])
+            } else {
+                array[0] = array[0].replace(/['"]/g, "");
+            }
+            if (!reg.test(array[1])) {
+                array[1] = get_value(vars, array[1])
+            } else {
+                array[1] = array[1].replace(/['"]/g, "");
+            }
+            if (cond != null) {
+                try {
+                    if (cond == "==") {
+                        ret = array[0] == array[1];
+                    } else {
+                        ret = eval("(" + array[0] + cond + array[1] + ")");
+                    }
+                }
+                catch (e) {
+                    ret = false
+                }
+            }
+        } else {
+            ret = get_value(vars, express)
+        }
+        return ret;
+    }
+    ;
     function render(fragment, vars) {
         var tagret = fragment.tagsearchTop("c:forEach", function (content, sstart, eend, p) {
             var tag_return = content.replace(taglib_each_reg, function (allstr, key, item, inner, $4) {
@@ -51,14 +94,33 @@
             })
             return  tag_return;
         });
-        return     tagret.replace(taglib_if_reg, function (allstr, _,express, inner) {
-//            staticValue = staticValue.replace(/['|"]/g, "");
-            console.log("替换，",express)
-            console.log("inner，",inner)
-//            var val = get_value(vars, key)
-//            if ((val + "") == staticValue) {
-//                return render(inner, vars);
-//            }
+        return  tagret.replace(taglib_if_reg, function (allstr, _, express, inner) {
+            var check = false;
+            var a1 = express.split("&&");
+            for (var i = 0; i < a1.length; i++) {
+                var item = a1[i];
+                var a2 = item.split("||");
+                if (a2.length > 1) {
+                    for (var j = 0; j < a2.length; j++) {
+                        a2[j] = getExpress_value(vars, a2[j])
+                    }
+                    a1[i] = a2.join("||");
+                } else {
+                    a1[i] = getExpress_value(vars, a2[0])
+                }
+            }
+            var ret_express = a1.join("&&");// 返回 true&&false||true 这种格式的字符串。
+            try {
+                check = eval("(" + ret_express + ")");
+//                console.log("(" + ret_express + ")");
+            }
+            catch (e) {
+                check = false;
+            }
+//            console.log("校验结果", check);
+            if (check) {
+                return render(inner, vars);
+            }
             return "";
         }).replace(taglib_jsp_reg, function (allstr, key) {
             var val = get_value(vars, key);
