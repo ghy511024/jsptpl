@@ -2,12 +2,15 @@ fis.match('*', {
     release: false
 })
 
-fis.match('*(jsptpl*.js)', {
+fis.match('*(*).out.js', {
     release: "$1",
     deploy: fis.plugin('local-deliver', {
         to: "dist"
-    }),
-    optimizer: fis.plugin('uglify-js')
+    })
+   
+})
+fis.match('**.min.js', {
+     optimizer: fis.plugin('uglify-js')
 })
 fis.match('**{jsptpl}.min.js', {optimizer: fis.plugin('uglify-js')})
 //===================== 忽略规则  ===================

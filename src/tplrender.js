@@ -1,17 +1,6 @@
 /*
- *  _           _         _ 
- (_)         | |       | |
- _ ___ _ __ | |_ _ __ | |
- | / __| '_ \| __| '_ \| |
- | \__ \ |_) | |_| |_) | |
- | |___/ .__/ \__| .__/|_|
- _/ |   | |       | |      
- |__/    |_|       |_|      
- 
  * 
- *jsptl.js  基于jsp jstl语法的模版引擎
- *@author gonghongyu <gonghongyu@le.com>
- *@version 0.0.1
+ *渲染模版
  * **/
 
 (function () {
@@ -51,14 +40,13 @@
             })
             return  tag_return;
         });
-        return     tagret.replace(taglib_if_reg, function (allstr, _,express, inner) {
-//            staticValue = staticValue.replace(/['|"]/g, "");
-            console.log("替换，",express)
-            console.log("inner，",inner)
-//            var val = get_value(vars, key)
-//            if ((val + "") == staticValue) {
-//                return render(inner, vars);
-//            }
+        return     tagret.replace(taglib_if_reg, function (allstr, _, express, inner) {
+            try {
+                eval()
+            }
+            catch (e) {
+
+            }
             return "";
         }).replace(taglib_jsp_reg, function (allstr, key) {
             var val = get_value(vars, key);
