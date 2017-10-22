@@ -5,7 +5,7 @@
 
 (function () {
     var taglib_jsp_reg = /\$\{(.+?)\}/g;
-    var taglib_each_reg = /<[c|t]:forEach[\s]*items=["|']\$\{(.+?)\}.*[\s]+?var=["|'](.+?)["|'].*>([\s\S]*)<\/[c|t]:forEach>/g;
+    var taglib_each_reg = /<[c|t]:forEach[\s]*items=["|']\$\{(.+?)\}.*?[\s]+?var=["|'](.+?)["|'].*?>([\s\S]*)<\/[c|t]:forEach>/g;
     var taglib_if_reg = /<[c|t]:if\s+test=\s*(["|'])\$\{(.+?=?.+)\}\1+?>([\s\S]+?)<\/[c|t]:if>/g;
     function jsptpl(template) {
         this.jsptpl = template;
@@ -13,6 +13,7 @@
     function get_value(vars, key) {
         var parts = key.split('.');
         while (parts.length) {
+            
             if (vars != null) {
                 if (!(parts[0] in vars)) {
                     return false;
@@ -75,6 +76,7 @@
                 var val = get_value(vars, key)
                 var i, temp = "";
                 for (i in val) {
+                    
                     if (val.hasOwnProperty(i)) {
                         var obj = {};
                         obj[item] = val[i];
