@@ -19,20 +19,18 @@ and open the template in the editor.
 <c:forEach items="${hardlist}" var="item">
 <li>name:${item.name}
 <c:forEach items="${item.objlist}" var="tmp">
-<span>${tmp.type}</span>
-<c:forEach items="${tmp.objlist}" var="it">
-<i>${it.name}</i>
-</c:forEach>
-</c:forEach>
-</li>
-</c:forEach>
-</ul>
+<span>${tmp.type}</span></c:forEach></li></c:forEach></ul>
         </script>
+        <script type="t/template" id="test3">
+<ul><c:forEach items="${hardlist}" var="item"><li>name:${item.name}<c:forEach items="${item.objlist}" var="tmp"><span>${tmp.type}</span></c:forEach></li></c:forEach></ul>      </script>
+
+
+
         <script type="t/template" id="test1">
             <div class="t0"></div><div class="test1"><div class="test2"><div class="test4"></div></div><div class="test3"></div></div>
         </script>
-        <script type="text/javascript" src="jsptpl.js"></script>
-        <script type="text/javascript" src="lib/tagsearch.js"></script>
+        <script type="text/javascript" src="/dist/jsptpl.js"></script>
+        <!--<script type="text/javascript" src="lib/tagsearch.js"></script>-->
         <script type="text/javascript">
 var data = {
     title: "hellow word",
@@ -96,10 +94,18 @@ var data = {
 }
 //=================华丽的测试分割线==============
 var str = document.getElementById('test').innerHTML;
+var str3 = document.getElementById('test3').innerHTML;
 var strtmpl = new jsptpl(str);
-//console.log(str);
 var retstr = strtmpl.render(data);
+console.log(str);
 console.log(retstr);
+console.log("///////////////////////")
+var strtmpl3 = new jsptpl(str3);
+var retstr3 = strtmpl3.render(data);
+
+
+console.log(str3);
+console.log(retstr3);
 //<(?<HtmlTag>div)[^>]*?>((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>
 //var reg2=/((\?<Nested><\k<HtmlTag>[^>]*>)|<\/\k<HtmlTag>>(\?<-Nested>)|.*?)*<\/\k<HtmlTag>>/g;
 //var reg3=new RegExp("((?<Nested><\k<HtmlTag>[^>]*>)|</\k<HtmlTag>>(?<-Nested>)|.*?)*</\k<HtmlTag>>")
