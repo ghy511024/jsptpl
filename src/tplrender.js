@@ -23,7 +23,6 @@
     }
     function get_value(vars, key) {
         var parts = key.split('.');
-        console.log(vars, key)
         while (parts.length) {
             
             if (vars != null) {
@@ -89,7 +88,6 @@
                     
                     if (val.hasOwnProperty(i)) {
                         var obj = {};
-                        console.log(i, "sdfsdf")
                         obj[item] = val[i];
                         temp += render(inner, obj);
                     }
