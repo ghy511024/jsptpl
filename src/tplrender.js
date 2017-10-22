@@ -1,17 +1,6 @@
 /*
- *  _           _         _ 
- (_)         | |       | |
- _ ___ _ __ | |_ _ __ | |
- | / __| '_ \| __| '_ \| |
- | \__ \ |_) | |_| |_) | |
- | |___/ .__/ \__| .__/|_|
- _/ |   | |       | |      
- |__/    |_|       |_|      
- 
  * 
- *jsptl.js  基于jsp jstl语法的模版引擎
- *@author gonghongyu <gonghongyu@le.com>
- *@version 0.0.1
+ *渲染模版
  * **/
 
 (function () {
@@ -80,7 +69,9 @@
     }
     ;
     function render(fragment, vars) {
+        // 暂时定死查找标签 c:forEach， 后期可以支持传入标签变量进来,使得插件更为灵活 
         var tagret = fragment.tagsearchTop("c:forEach", function (content, sstart, eend, p) {
+//        var tagret = fragment.tagsearchTop("div", function (content, sstart, eend, p) {
             var tag_return = content.replace(taglib_each_reg, function (allstr, key, item, inner, $4) {
                 var val = get_value(vars, key)
                 var i, temp = "";
@@ -137,4 +128,17 @@
         return render(this.jsptpl, vars);
     };
     window.jsptpl = jsptpl;
+})();
+/*
+ * fis3 TPL ，公共函数
+ * **/
+window.TPL = (function () {
+    var TPL = {
+        tplmap: {},
+        getTmp: function (_id) {
+            return this.tplmap[_id];
+        }
+    }
+    return TPL;
 })()
+
